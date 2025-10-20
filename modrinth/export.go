@@ -9,6 +9,7 @@ import (
 	"slices"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/packwiz/packwiz/cmdshared"
 	"github.com/spf13/viper"
@@ -102,6 +103,9 @@ var exportCmd = &cobra.Command{
 
 		manifestFiles := make([]PackFile, 0)
 		for dl := range session.StartDownloads() {
+			if strings.HasSuffix(dl.Mod.MetaFile, "cf.pw.toml") {
+				continue
+			}
 			if canBeIncludedDirectly(dl.Mod, restrictDomains) {
 				if dl.Error != nil {
 					fmt.Printf("Download of %s (%s) failed: %v\n", dl.Mod.Name, dl.Mod.FileName, dl.Error)

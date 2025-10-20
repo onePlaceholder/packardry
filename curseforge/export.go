@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/packwiz/packwiz/cmdshared"
 	"github.com/packwiz/packwiz/core"
@@ -136,7 +137,11 @@ var exportCmd = &cobra.Command{
 			cmdshared.ListManualDownloads(session)
 
 			for dl := range session.StartDownloads() {
-				_ = cmdshared.AddToZip(dl, exp, "overrides", &index)
+				// PackArdry - Start
+				if !strings.HasSuffix(dl.Mod.MetaFile, "mr.pw.toml") {
+					_ = cmdshared.AddToZip(dl, exp, "overrides", &index)
+				}
+				// PackArdry - End
 			}
 
 			err = session.SaveIndex()

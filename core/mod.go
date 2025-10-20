@@ -13,7 +13,7 @@ import (
 
 // Mod stores metadata about a mod. This is written to a TOML file for each mod.
 type Mod struct {
-	metaFile string      // The file for the metadata file, used as an ID
+	MetaFile string      // The file for the metadata file, used as an ID
 	Name     string      `toml:"name"`
 	FileName string      `toml:"filename"`
 	Side     string      `toml:"side,omitempty"`
@@ -75,24 +75,24 @@ func LoadMod(modFile string) (Mod, error) {
 			return mod, errors.New("Update plugin " + k + " not found!")
 		}
 	}
-	mod.metaFile = modFile
+	mod.MetaFile = modFile
 	return mod, nil
 }
 
 // SetMetaPath sets the file path of a metadata file
 func (m *Mod) SetMetaPath(metaFile string) string {
-	m.metaFile = metaFile
-	return m.metaFile
+	m.MetaFile = metaFile
+	return m.MetaFile
 }
 
 // Write saves the mod file, returning a hash format and the value of the hash of the saved file
 func (m Mod) Write() (string, string, error) {
-	f, err := os.Create(m.metaFile)
+	f, err := os.Create(m.MetaFile)
 	if err != nil {
 		// Attempt to create the containing directory
-		err2 := os.MkdirAll(filepath.Dir(m.metaFile), os.ModePerm)
+		err2 := os.MkdirAll(filepath.Dir(m.MetaFile), os.ModePerm)
 		if err2 == nil {
-			f, err = os.Create(m.metaFile)
+			f, err = os.Create(m.MetaFile)
 		}
 		if err != nil {
 			return "sha256", "", err
@@ -126,12 +126,12 @@ func (m Mod) GetParsedUpdateData(updaterName string) (interface{}, bool) {
 
 // GetFilePath is a clumsy hack that I made because Mod already stores it's path anyway
 func (m Mod) GetFilePath() string {
-	return m.metaFile
+	return m.MetaFile
 }
 
 // GetDestFilePath returns the path of the destination file of the mod
 func (m Mod) GetDestFilePath() string {
-	return filepath.Join(filepath.Dir(m.metaFile), filepath.FromSlash(m.FileName))
+	return filepath.Join(filepath.Dir(m.MetaFile), filepath.FromSlash(m.FileName))
 }
 
 var slugifyRegex1 = regexp.MustCompile(`\(.*\)`)
