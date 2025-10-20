@@ -13,7 +13,7 @@ import (
 
 // Mod stores metadata about a mod. This is written to a TOML file for each mod.
 type Mod struct {
-	MetaFile string      // The file for the metadata file, used as an ID
+	MetaFile string      `toml:"-"` // The file for the metadata file, used as an ID
 	Name     string      `toml:"name"`
 	FileName string      `toml:"filename"`
 	Side     string      `toml:"side,omitempty"`
