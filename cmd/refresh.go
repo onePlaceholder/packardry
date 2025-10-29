@@ -19,7 +19,7 @@ var refreshCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// Packardry - Start
 		scriptPath := "./packardry_build.sh"
-		if _, err := os.Stat(scriptPath); os.IsExist(err) {
+		if _, err := os.Stat(scriptPath); err == nil {
 			exec.Command("bash", scriptPath)
 		}
 		// Packardry - End
