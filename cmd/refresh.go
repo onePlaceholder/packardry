@@ -20,7 +20,8 @@ var refreshCmd = &cobra.Command{
 		// Packardry - Start
 		scriptPath := "./packardry_build.sh"
 		if _, err := os.Stat(scriptPath); err == nil {
-			exec.Command("bash", scriptPath)
+			cmd := exec.Command("bash", scriptPath)
+			cmd.Run()
 		}
 		// Packardry - End
 		fmt.Println("Loading modpack...")
