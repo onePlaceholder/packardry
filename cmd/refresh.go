@@ -2,8 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/viper"
 	"os"
+	"os/exec"
+
+	"github.com/spf13/viper"
 
 	"github.com/packwiz/packwiz/core"
 	"github.com/spf13/cobra"
@@ -15,6 +17,12 @@ var refreshCmd = &cobra.Command{
 	Short: "Refresh the index file",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
+		// Packardry - Start
+		scriptPath := "./packardry_build.sh"
+		if _, err := os.Stat(scriptPath); os.IsExist(err) {
+			exec.Command("bash", scriptPath)
+		}
+		// Packardry - End
 		fmt.Println("Loading modpack...")
 		pack, err := core.LoadPack()
 		if err != nil {

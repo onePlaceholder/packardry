@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"os/exec"
 	"path"
 	"path/filepath"
 	"strconv"
@@ -150,6 +151,12 @@ var serveCmd = &cobra.Command{
 }
 
 func doServeRefresh(pack *core.Pack, index *core.Index) error {
+	// Packardry - Start
+	scriptPath := "./packardry_build.sh"
+	if _, err := os.Stat(scriptPath); os.IsExist(err) {
+		exec.Command("bash", scriptPath)
+	}
+	// Packardry - End
 	var err error
 	*pack, err = core.LoadPack()
 	if err != nil {
